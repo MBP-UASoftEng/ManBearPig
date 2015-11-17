@@ -32,8 +32,8 @@ class Product(db.Model):
     parent_id = db.Column(db.Integer)
     extended_description = db.Column(db.String)
     inactive = db.Column(db.String)
-    msrp = db.Column(db.Float(precision=2, asdecimal=False, decimal_return_scale=None), nullable=False)
-    data_created = db.Column(db.String)
+    msrp = db.Column(db.Float(precision=2, asdecimal=False, decimal_return_scale=None))
+    date_created = db.Column(db.String)
 
 class TenderEntry(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -60,7 +60,7 @@ class Transaction(db.Model):
 class TransactionEntry(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     transaction_id = db.Column(db.Integer, db.ForeignKey('transaction.id'))
-    product_id = db.Column(db.Integer, db.ForeignKey('product.item_id'))
+    #product_id = db.Column(db.Integer, db.ForeignKey('product.item_id'))
     price = db.Column(db.Float(precision=2, asdecimal=False, decimal_return_scale=None))
     quantity = db.Column(db.Float(precision=2, asdecimal=False, decimal_return_scale=None))
 

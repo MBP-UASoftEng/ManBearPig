@@ -18,27 +18,29 @@
 	</head>
 	<body>
 		<h1>Search results</h1>
-		<table>
-			<tr>
-				<th>Lookup code</th>
-				<th>Description</th>
-				<th>Price</th>
-				<th>Quantity</th>
-				<th>Active?</th>
-			</tr>
-			<tr>
-				<td>{{ lookup_code }}</td>
-				<td>{{ description }}</td>
-				<td>{{ price }}</td>
-				<td>{{ quantity }}</td>
-				<td>{{ active }}</td>
-			</tr>
-		</table><br>
-		<button onclick="goBack()">Go back</button>
-		<script>
-			function goBack() {
-			    window.history.back();
-			}
-		</script>
+		{% if lookup_code %}
+			<table>
+				<tr>
+					<th>Lookup code</th>
+					<th>Description</th>
+					<th>Price</th>
+					<th>Quantity</th>
+					<th>Active?</th>
+				</tr>
+				<tr>
+					<td>{{ lookup_code }}</td>
+					<td>{{ description }}</td>
+					<td>{{ price }}</td>
+					<td>{{ quantity }}</td>
+					<td>{{ active }}</td>
+				</tr>
+			</table><br>
+		{% else %}
+			<p>Sorry Item Not Found</p>
+		{% endif %}
+
+		<form action="/" method="get">
+			<input type="submit" value="Go Back">
+		</form>
 	</body>
 </html>

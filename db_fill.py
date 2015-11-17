@@ -9,7 +9,7 @@ for row in reader:
     if row[0] != 'BinLocation':
         product = models.Product()
         if len(row) >= 8 and row[8] is not '':
-            product.description = row[8]
+            product.description = row[8].decode('unicode_escape').encode('ascii','ignore')
         if len(row) >= 18 and row[18] is not '':
             product.item_id = int(row[18])
         if len(row) >= 19 and row[19] is not '':
@@ -33,8 +33,6 @@ for row in reader:
         if len(row) >= 34 and row[34] is not '':
             product.quantity = float(row[34])
         if len(row) >= 35 and row[35] is not '':
-            print row[35]
-            print count
             product.reorder_point = float(row[35])
         if len(row) >= 37 and row[37] is not '':
             product.restock_level = int(row[36])

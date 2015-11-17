@@ -9,4 +9,23 @@ def index():
 
 @app.route('/result', methods=['GET', 'POST'])
 def result():
-    return render_template('results.html', lookup_code="dummy_data", description="dummy_data", price="dummy_data", quantity="dummy_data", active="dummy_data")
+    lookup_code = None
+    if request.method == 'POST':
+        lookup_code = request.form['lookup_code']
+
+    elif request.method == "GET":
+        lookup_code = request.args.get('lookup_code')
+
+    if lookup_code == None:
+        return "please enter lookup code"    
+
+    item = db.session.query(Product).filter_by(item_lookup_code = lookup_code).first()
+
+    if item == None:
+        return render_template('results.html')
+
+    if item.inactive == "0":
+        return render_template('results.html', lookup_code=item.item_lookup_code, description=item.description, price=str(item.price), quantity=str(item.quantity), active="True")
+
+    else:
+        return render_template('results.html', lookup_code=item.item_lookup_code, description=item.description, price=str(item.price), quantity=str(item.quantity), active="False") 
