@@ -12,20 +12,27 @@ def result():
     lookup_code = None
     if request.method == 'POST':
         lookup_code = request.form['lookup_code']
+        filter_by = request.form['filter_by']
+        lower_bound = request.form['lower_bound']
+        upper_bound = request.form['upper_bound']
 
     elif request.method == "GET":
         lookup_code = request.args.get('lookup_code')
+        filter_by = request.args.get('filter_by')
+        lower_bound = request.args.get('lower_bound')
+        upper_bound = request.args.get('upper_bound')
 
-    if lookup_code == None:
-        return "please enter lookup code"    
+    if lower_bound == '':
+        lower_bound = 0
 
-    item = db.session.query(Product).filter_by(item_lookup_code = lookup_code).first()
+    if upper_bound == '':
+        upper_bound = 99999999999
 
-    if item == None:
-        return render_template('results.html')
+    if filter_by == 'price':
+        items = db.session.query(Product).filter(Product.item_lookup_code.like('%' + lookup_code + '%'), Product.price.between(float(lower_bound), float(upper_bound))).all()
+    elif filter_by == 'cost':
+        items = db.session.query(Product).filter(Product.item_lookup_code.like('%' + lookup_code + '%'), Product.cost.between(float(lower_bound), float(upper_bound))).all()
+    elif filter_by == 'msrp':
+        items = db.session.query(Product).filter(Product.item_lookup_code.like('%' + lookup_code + '%'), Product.msrp.between(float(lower_bound), float(upper_bound))).all()
 
-    if item.inactive == "0":
-        return render_template('results.html', lookup_code=item.item_lookup_code, description=item.description, price=str(item.price), quantity=str(item.quantity), active="True")
-
-    else:
-        return render_template('results.html', lookup_code=item.item_lookup_code, description=item.description, price=str(item.price), quantity=str(item.quantity), active="False") 
+    return render_template('results.html', items = items)
