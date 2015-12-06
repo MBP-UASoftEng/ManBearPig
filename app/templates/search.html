@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Search product</title>
+		<title>Search products</title>
 		<style type="text/css">
 			body {
 				font-family: sans-serif;
@@ -9,9 +9,16 @@
 		</style>
 	</head>
 	<body>
-		<h1>Search product</h1>
+		<h1>Search products</h1>
 		<form action="/result" method="get">
-			Lookup code: <input type="text" name="lookup_code">
+			Lookup code: <input type="text" name="lookup_code"><br>
+			Filter by: <select name="filter_by">
+				<option value="price">Price</option>
+				<option value="cost">Cost</option>
+				<option value="msrp">MSRP</option>
+			</select><br>
+			Lower bound: <input type="text" name="lower_bound" size="5"><br>
+			Upper bound: <input type="text" name="upper_bound" size="5"><br>
 			<input type="submit" value="Search">
 		</form>
 	</body>
