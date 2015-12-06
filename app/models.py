@@ -63,6 +63,3 @@ class TransactionEntry(db.Model):
     #product_id = db.Column(db.Integer, db.ForeignKey('product.item_id'))
     price = db.Column(db.Float(precision=2, asdecimal=False, decimal_return_scale=None))
     quantity = db.Column(db.Float(precision=2, asdecimal=False, decimal_return_scale=None))
-
-
-
