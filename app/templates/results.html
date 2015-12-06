@@ -18,25 +18,31 @@
 	</head>
 	<body>
 		<h1>Search results</h1>
-		{% if lookup_code %}
+		{% if items %}
 			<table>
 				<tr>
 					<th>Lookup code</th>
 					<th>Description</th>
 					<th>Price</th>
+					<th>Cost</th>
+					<th>MSRP</th>
 					<th>Quantity</th>
 					<th>Active?</th>
 				</tr>
+				{% for item in items %}
 				<tr>
-					<td>{{ lookup_code }}</td>
-					<td>{{ description }}</td>
-					<td>{{ price }}</td>
-					<td>{{ quantity }}</td>
-					<td>{{ active }}</td>
+					<td style="text-align:center">{{ item.item_lookup_code }}</td>
+					<td>{{ item.description }}</td>
+					<td style="text-align:right">{{ item.price }}</td>
+					<td style="text-align:right">{{ item.cost }}</td>
+					<td style="text-align:right">{{ item.msrp }}</td>
+					<td style="text-align:right">{{ item.quantity }}</td>
+					<td style="text-align:center">{% if item.inactive == '0' %} Yes {% else %} No {% endif %}</td>
 				</tr>
+				{% endfor %}
 			</table><br>
 		{% else %}
-			<p>Sorry Item Not Found</p>
+			<p>Sorry! No item found.</p>
 		{% endif %}
 
 		<form action="/" method="get">
